@@ -51,7 +51,7 @@ vector<int> bubbleSortOpt2(vector<int> arr){
   int n = arr.size();
   bool swapped = false;
   int efficiency=0;
-  while(n <= 1){
+  while(n > 1){
     int newn = 0;
     for ( int i=1 ; i<n ; ++i ){
       if(arr[i-1] > arr[i]){
@@ -92,7 +92,7 @@ int main(int argc, char const *argv[]) {
     cout << sortedOpt1[i] << " ";
   }
   cout << endl << endl;
-  vector<int> sortedOpt2 = bubbleSortOpt2(arrOpt1);
+  vector<int> sortedOpt2 = bubbleSortOpt2(arrOpt2);
   cout << "sorted Opt2 array: " << endl;
 
   for (int i=0 ; i < arr.size() ; i++ ){
