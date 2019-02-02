@@ -1,0 +1,26 @@
+This is the dynamic programming solution to the Longest Common Subsequence.
+
+For example:
+
+X: ABCBDAB
+Y: BDCABA
+
+The length of the LCS is 4
+LCS are BDAB, BCAB, BCBA
+
+Sub Problems of LCS:
+
+* This uses strings X[0..n] and Y[0..m]
+
+1) When the 2 strings end in the same character:
+  LCS(X[0..n], Y[0..m]) = LCS(X[0..n-1], Y[0..m-1]) + X[m] if X[n] = Y[m]
+
+2) When the 2 strings end in different characters:
+
+  case 1:
+    if the LCS ends in X[n] then it cannot end in Y[m] thus we have
+    the strings X[n] and Y[m-1]
+
+  case 2:
+    if the LCS ends in Y[m] then it cannot end in X[n] thus we have
+    the strings X[n-1] and Y[m]
