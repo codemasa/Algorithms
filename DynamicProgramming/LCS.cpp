@@ -31,7 +31,7 @@ int LCSLengthMemoTD(string s1, string s2, int n, int m, unordered_map<string, in
       lookup[key] = LCSLengthMemoTD(s1, s2, n-1, m-1, lookup) + 1;
     }
     else {
-      max(LCSLengthMemoTD(s1, s2, n, m-1, lookup), LCSLengthMemoTD(s1, s2, n-1, m, lookup));
+      return  max(LCSLengthMemoTD(s1, s2, n, m-1, lookup), LCSLengthMemoTD(s1, s2, n-1, m, lookup));
     }
 
   }
@@ -40,24 +40,28 @@ int LCSLengthMemoTD(string s1, string s2, int n, int m, unordered_map<string, in
 }
 
 int LCSLengthMemoBU(string s1, string s2){
-  // Empty string meaning LCS is 0;
-  if(n == 0 || m == 0){
-    return 0;
+  int n = s1.length();
+  int m = s2.length();
+
+  int lookup[n+1][m+1];
+
+  for(int i=0 ; i<n+1 ; i++){
+    lookup[i][0] = 0;
   }
-  string key = to_string(n) + "|" + to_string(m);
-
-  if(lookup.find(key) == lookup.end()){
-
-    if(s1[n-1] == s2[m-1]){
-      lookup[key] = LCSLengthMemoTD(s1, s2, n-1, m-1, lookup) + 1;
-    }
-    else {
-      max(LCSLengthMemoTD(s1, s2, n, m-1, lookup), LCSLengthMemoTD(s1, s2, n-1, m, lookup));
-    }
-
+  for(int i=0 ; i<m+1 ; i++){
+    lookup[0][i] = 0;
   }
-
-  return lookup[key];
+  for(int i=1 ; i<=n ; i++){
+    for(int j=1 ; j<=m ; j++){
+      if(s1[i-1] == s2[j-1]){
+        lookup[i][j] = lookup[i-1][j-1] + 1;
+      }
+      else{
+        lookup[i][j] = max(lookup[i-1][j], lookup[i][j-1]);
+      }
+    }
+  }
+  return lookup[n][m];
 }
 
 
@@ -68,6 +72,8 @@ int main(int argc, char *argv[]){
 
   cout << "LCS of " << s1 << " and " << s2 << " is " << LCSLength(s1,s2,s1.length(),s2.length()) << endl;
 
-  cout << "Memoized LCS of " << s1 << " and " << s2 << " is " << LCSLength(s1,s2,s1.length(),s2.length()) << endl;
+  cout << "Memoized top down LCS of " << s1 << " and " << s2 << " is " << LCSLengthMemoTD(s1,s2,s1.length(),s2.length(), lookup) << endl;
+
+  cout << "Memoized bottom up LCS of " << s1 << " and " << s2 << " is " << LCSLengthMemoBU(s1,s2) << endl;
 
 }
